@@ -4,6 +4,9 @@ export interface Props {
 }
 
 const { title } = Astro.props;
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+import Hamburger from '../components/Hamburger.astro';
 ---
 
 <!DOCTYPE html>
@@ -17,8 +20,13 @@ const { title } = Astro.props;
     <title>{title}</title>
   </head>
   <body>
+    <Hamburger />
+    <Navigation />
     <slot />
   </body>
+  <script>
+    import '../scripts/menu.js';
+  </script>
 </html>
 <style is:global>
   :root {
