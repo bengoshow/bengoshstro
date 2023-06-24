@@ -1,0 +1,141 @@
+@use "sass:color";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$theme-light: hsl(50deg 84% 90%);
+$theme-dark: hsl(240deg 100% 13%);
+$theme-yellow: hsl(55deg 100% 50%);
+
+@layer base {
+  :root {
+    --gradient:      
+      hsl(240deg 100% 13%) 2%,
+      hsl(284deg 92% 16%) 57%,
+      hsl(311deg 100% 21%) 73%,
+      hsl(325deg 100% 30%) 82%,
+      hsl(340deg 74% 44%) 88%,
+      hsl(357deg 74% 57%) 93%,
+      hsl(15deg 95% 60%) 96%,
+      hsl(31deg 100% 56%) 98%,
+      hsl(45deg 100% 50%) 99%,
+      hsl(55deg 100% 50%) 100%;
+    --theme-light: #{$theme-light};
+    --theme-dark: #{$theme-dark};
+    --theme-yellow: #{$theme-yellow};
+  }
+  html {
+    font-family: 'Rubik', system-ui, sans-serif;
+    background-color: var(--theme-dark);
+    background-image: linear-gradient(
+      180deg,
+      var(--gradient)
+    );
+    color: var(--theme-light);
+    min-height: 100%;
+  }
+  body {
+    @apply grid;
+    grid-template-rows: auto 2rem;
+    min-height: 100vh;
+  }
+  main {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 80ch;
+    padding: 1rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  a {
+    @apply underline;
+  }
+  h1 {
+    @apply text-2xl my-1 mx-0 font-extrabold;
+    font-family: 'Bungee', sans-serif;
+    span {
+      font-family: 'Bungee Shade', sans-serif;
+    }
+  }
+  p {
+    @apply my-6;
+    &:first-child {
+      @apply mt-0;
+    }
+  }
+  code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
+      monospace;
+    background-color: color.scale($theme-dark, $alpha: -30%);
+    border: solid 2px color.scale($theme-dark, $lightness: -30%, $alpha: -30%);
+    @apply rounded px-2 py-1;
+    &.block {
+      @apply p-6 my-6 pl-10 relative;
+    }
+    &::before {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      font-feature-settings: 'liga';
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      height: 24px;
+      width: 24px;
+    }
+    &::before {
+      content:'chevron_right';
+      @apply absolute top-6 left-6 -translate-x-2;
+    }
+  }
+}
+
+@layer components {
+  .avatar {
+    @apply rounded-full w-28 h-28;
+  }
+  .header-menu {
+    @apply md:fixed top-6 right-6;
+    button {
+      span {
+        @apply text-4xl;
+      }
+    }
+    nav {
+      @apply hidden;
+    }
+  }
+  button {
+    @apply rounded-lg p-3 ring-2 ring-offset-2 ring-offset-blue-950 ring-yellow-500;
+    background-color: var(--theme-dark);
+    background-image: linear-gradient(
+      45deg,
+      var(--gradient)
+    );
+    transition: background 150ms ease-in-out;
+    &:hover, &:focus {
+      background-image: linear-gradient(
+        125deg,
+        var(--gradient)
+      );
+  
+    }
+  }
+  footer {
+    @apply text-center;
+    svg {
+      @apply inline w-6 h-6;
+      fill: var(--theme-light)
+    }
+  }
+}
