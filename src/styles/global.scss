@@ -26,7 +26,6 @@ $theme-yellow: hsl(55deg 100% 50%);
     --theme-yellow: #{$theme-yellow};
   }
   html {
-    font-family: 'Rubik', system-ui, sans-serif;
     background-color: var(--theme-dark);
     background-image: linear-gradient(
       180deg,
@@ -54,10 +53,9 @@ $theme-yellow: hsl(55deg 100% 50%);
     @apply underline;
   }
   h1 {
-    @apply text-2xl my-1 mx-0 font-extrabold;
-    font-family: 'Bungee', sans-serif;
+    @apply text-2xl my-1 mx-0 font-extrabold font-display;
     span {
-      font-family: 'Bungee Shade', sans-serif;
+      @apply font-emphatic;
     }
   }
   p {
