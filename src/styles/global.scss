@@ -75,8 +75,8 @@ $theme-yellow: hsl(55deg 100% 50%);
     }
     svg {
       @apply absolute top-6 left-6 -translate-x-2;
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       fill: var(--theme-light)
     }
   }
@@ -87,20 +87,23 @@ $theme-yellow: hsl(55deg 100% 50%);
     @apply rounded-full w-28 h-28;
   }
   .header-menu {
-    @apply md:fixed top-6 right-6;
+    @apply fixed top-6 right-6;
     button {
-      span {
-        color: var(--theme-light);
-        svg {
-          fill: var(--theme-light);
-        }
+      span, svg {
+        @apply transition-all duration-300 relative z-10;
+      }
+      span:last-child {
+        @apply absolute opacity-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
       }
       &:hover {
         :first-child {
-          @apply hidden;
+          @apply opacity-0 delay-500;
+          svg {
+            @apply rotate-45 translate-x-[5px] -translate-y-[5px] origin-center delay-0;
+          }
         }
         :last-child {
-          @apply visible block;
+          @apply opacity-100 delay-300;
         }
       }
     }
@@ -109,18 +112,25 @@ $theme-yellow: hsl(55deg 100% 50%);
     }
   }
   button {
-    @apply rounded-lg p-3 ring-2 ring-offset-2 ring-offset-blue-950 ring-yellow-500;
+    @apply rounded-lg p-3 ring-2 ring-offset-2 ring-offset-blue-950 ring-yellow-500 relative z-10 mx-1;
     background-color: var(--theme-dark);
     background-image: linear-gradient(
       45deg,
       var(--gradient)
     );
-    &:hover, &:focus {
+    &::after {
+      @apply rounded-lg absolute inset-0 opacity-0 transition-all duration-500;
+      z-index: -1;
+      content:'';
       background-image: linear-gradient(
         125deg,
         var(--gradient)
       );
-  
+    }
+    &:hover, &:focus {
+      &::after {
+        @apply opacity-100;
+      }  
     }
   }
   footer {
