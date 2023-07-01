@@ -1,4 +1,4 @@
-@use "sass:color";
+@use 'sass:color';
 
 @tailwind base;
 @tailwind components;
@@ -10,36 +10,25 @@ $theme-yellow: hsl(55deg 100% 50%);
 
 @layer base {
   :root {
-    --gradient:      
-      hsl(240deg 100% 13%) 2%,
-      hsl(284deg 92% 16%) 57%,
-      hsl(311deg 100% 21%) 73%,
-      hsl(325deg 100% 30%) 82%,
-      hsl(340deg 74% 44%) 88%,
-      hsl(357deg 74% 57%) 93%,
-      hsl(15deg 95% 60%) 96%,
-      hsl(31deg 100% 56%) 98%,
-      hsl(45deg 100% 50%) 99%,
-      hsl(55deg 100% 50%) 100%;
+    --gradient: hsl(240deg 100% 13%) 2%, hsl(284deg 92% 16%) 57%, hsl(311deg 100% 21%) 73%, hsl(325deg 100% 30%) 82%,
+      hsl(340deg 74% 44%) 88%, hsl(357deg 74% 57%) 93%, hsl(15deg 95% 60%) 96%, hsl(31deg 100% 56%) 98%,
+      hsl(45deg 100% 50%) 99%, hsl(55deg 100% 50%) 100%;
     --theme-light: #{$theme-light};
     --theme-dark: #{$theme-dark};
     --theme-yellow: #{$theme-yellow};
   }
   html {
     background-color: var(--theme-dark);
-    background-image: linear-gradient(
-      180deg,
-      var(--gradient)
-    );
+    background-image: linear-gradient(180deg, var(--gradient));
     color: var(--theme-light);
     min-height: 100%;
   }
-  body {
+  main {
     @apply grid;
-    grid-template-rows: auto 2rem;
+    grid-template-rows: auto 1fr auto;
     min-height: 100vh;
   }
-  main {
+  section {
     margin: 0 auto;
     width: 100%;
     max-width: 80ch;
@@ -50,13 +39,10 @@ $theme-yellow: hsl(55deg 100% 50%);
     justify-content: center;
   }
   a {
-    @apply underline;
+    @apply underline text-theme-light hover:text-theme-yellow transition-colors duration-300;
   }
   h1 {
     @apply text-2xl my-1 mx-0 font-extrabold font-display;
-    span {
-      @apply font-emphatic;
-    }
   }
   p {
     @apply my-6;
@@ -77,67 +63,86 @@ $theme-yellow: hsl(55deg 100% 50%);
       @apply absolute top-6 left-6 -translate-x-2;
       width: 24px;
       height: 24px;
-      fill: var(--theme-light)
+      fill: var(--theme-light);
     }
   }
 }
 
 @layer components {
+  nav.main {
+    @apply fixed w-80 max-w-full -right-80 top-0 bottom-0 z-50 p-8 bg-theme-dark transition-all duration-150;
+    li {
+      @apply text-xl;
+      a {
+        @apply no-underline;
+      }
+    }
+  }
   .avatar {
     @apply rounded-full w-28 h-28;
   }
-  .header-menu {
+  #menu-opener {
     @apply fixed top-6 right-6;
-    button {
-      span, svg {
-        @apply transition-all duration-300 relative z-10;
-      }
-      span:last-child {
-        @apply absolute opacity-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
-      }
-      &:hover {
-        :first-child {
-          @apply opacity-0 delay-500;
-          svg {
-            @apply rotate-45 translate-x-[5px] -translate-y-[5px] origin-center delay-0;
-          }
-        }
-        :last-child {
-          @apply opacity-100 delay-300;
-        }
-      }
+    span,
+    svg {
+      @apply transition-all duration-300 relative z-10;
     }
-    nav {
-      @apply hidden;
+    span:last-child {
+      @apply absolute opacity-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+    }
+    &:hover {
+      :first-child {
+        @apply opacity-0 delay-500;
+        svg {
+          @apply rotate-45 translate-x-[5px] -translate-y-[5px] origin-center delay-0;
+        }
+      }
+      :last-child {
+        @apply opacity-100 delay-300;
+      }
     }
   }
-  button {
-    @apply rounded-lg p-3 ring-2 ring-offset-2 ring-offset-blue-950 ring-yellow-500 relative z-10 mx-1;
+  button,
+  .button {
+    @apply inline-block rounded-lg p-3 ring-2 ring-offset-2 ring-offset-blue-950 ring-yellow-500 relative z-10 mx-1 no-underline cursor-pointer;
     background-color: var(--theme-dark);
-    background-image: linear-gradient(
-      45deg,
-      var(--gradient)
-    );
+    background-image: linear-gradient(45deg, var(--gradient));
     &::after {
       @apply rounded-lg absolute inset-0 opacity-0 transition-all duration-500;
       z-index: -1;
-      content:'';
-      background-image: linear-gradient(
-        125deg,
-        var(--gradient)
-      );
+      content: '';
+      background-image: linear-gradient(125deg, var(--gradient));
     }
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       &::after {
         @apply opacity-100;
-      }  
+      }
     }
   }
   footer {
     @apply text-center;
     svg {
       @apply inline w-6 h-6;
-      fill: var(--theme-light)
+      fill: var(--theme-light);
+    }
+  }
+}
+
+@layer utilities {
+  .fade-in {
+    // @apply opacity-0;
+    span {
+      animation: fadeIn 500ms ease-in-out;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 }

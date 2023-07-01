@@ -2,10 +2,17 @@
 import Layout from '../layouts/Layout.astro';
 const pageTitle = 'Ben Goshow, Developer';
 const pageDescription = 'This is the portfolio of Ben Goshow, Developer';
+const animationDelayStagger = [0, 300, 400, 500, 1000];
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <h1 class="md:text-6xl"><span>Goshstronauts,</span> welcome aboard.</h1>
+  <h1 class="md:text-6xl fade-in">
+    <span class="font-emphatic" style=`animation-delay: ${animationDelayStagger[0]}ms`>Goshstronauts</span>
+    <span class="font-emphatic" style=`animation-delay: ${animationDelayStagger[1]}ms`>.</span>
+    <span class="font-emphatic" style=`animation-delay: ${animationDelayStagger[2]}ms`>.</span>
+    <span class="font-emphatic" style=`animation-delay: ${animationDelayStagger[3]}ms`>.</span>
+    <span style=`animation-delay: ${animationDelayStagger[4]}ms`>welcome aboard.</span>
+  </h1>
   <p class="text-xl md:text-2xl">This is your captain speaking.</p>
   <code class="block">
     <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48">
@@ -13,5 +20,9 @@ const pageDescription = 'This is the portfolio of Ben Goshow, Developer';
     </svg>
     npm run launch
   </code>
-  <button>This is a button</button>
+  <p class="text-center">
+    <a href="/missions" class="button">Missions</a>
+    <a href="/missives" class="button">Missives</a>
+    <a href="/hello" class="button">Meet Your Captain</a>
+  </p>
 </Layout>
