@@ -69,15 +69,6 @@ $theme-yellow: hsl(55deg 100% 50%);
 }
 
 @layer components {
-  nav.main {
-    @apply fixed w-80 max-w-full -right-80 top-0 bottom-0 z-50 p-8 bg-theme-dark transition-all duration-150;
-    li {
-      @apply text-xl;
-      a {
-        @apply no-underline;
-      }
-    }
-  }
   .avatar {
     @apply rounded-full w-28 h-28;
   }

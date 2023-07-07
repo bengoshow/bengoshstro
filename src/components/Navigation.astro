@@ -1,12 +1,50 @@
+---
+const menu = {
+  '': 'Home Base',
+  missions: 'Missions',
+  log: "Captain's Log",
+  hello: 'Meet Your Captain',
+};
+---
+
 <nav class="main">
-  <button id="menu-closer">x</button>
+  <p class="text-right">
+    <button id="menu-closer">
+      <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48" fill="currentColor">
+        <path d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"
+        ></path>
+      </svg>
+    </button>
+  </p>
   <ul>
-    <li><a href="/">Home Base</a></li>
-    <li><a href="/missions">Missions and Missives</a></li>
-    <li><a href="/log">Captain's Log</a></li>
-    <li><a href="/hello">Meet your Captain</a></li>
+    {
+      Object.entries(menu).map(([key, value]) => {
+        return (
+          <li>
+            <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48">
+              <path fill="currentColor" d="m375-240-43-43 198-198-198-198 43-43 241 241-241 241Z" />
+            </svg>
+            <a href={`/${key}`}>{value}</a>
+          </li>
+        );
+      })
+    }
   </ul>
 </nav>
+<style>
+  nav.main {
+    @apply fixed w-80 max-w-full -right-80 top-0 bottom-0 z-50 p-6 bg-theme-dark transition-all duration-150;
+  }
+  nav.main button {
+    /* @apply text-right m-4; */
+  }
+  nav.main li {
+    @apply text-xl;
+  }
+  nav.main li a {
+    @apply no-underline;
+  }
+</style>
 <script>
   const menuButton = document.querySelector('#menu-closer');
   const mainMenu = document.querySelector('nav.main');
