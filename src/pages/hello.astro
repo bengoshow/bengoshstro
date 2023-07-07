@@ -7,16 +7,19 @@ const identity = {
   firstName: 'Ben',
   country: 'Indianapolis',
   occupation: 'Developer',
-  hobbies: ['reading science fiction', 'playing bass guitar', 'watching baseball'],
+  hobbies: ['reading science fiction', 'playing bass guitar', 'watching professional baseball'],
 };
 
 const skills = ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Astro'];
-
-const skillColor = 'purple';
 ---
 
 <Layout title="About Ben Goshow" description="This is a page about Ben Goshow">
-  <h1>My name is Ben</h1>
+  <img
+    class="circle"
+    src="/bengoshow_profile.jpeg"
+    alt="Stylized portrait of Ben Goshow gazing wistfully into the middle distance, undoubtedly dreaming of space travel."
+  />
+  <h1 class="mt-10">My name is Ben Goshow</h1>
   <p>I've been building websites since the dawn of this fair century.</p>
   <p>Here are a few facts about me:</p>
   <ul>
@@ -34,3 +37,12 @@ const skillColor = 'purple';
     {skills.map((skill) => <li class="skill">{skill}</li>)}
   </ul>
 </Layout>
+<style>
+  .circle {
+    float: left;
+    width: 50%;
+    border-radius: 100%;
+    transform: translateX(-20px);
+    shape-outside: circle(50%);
+  }
+</style>
