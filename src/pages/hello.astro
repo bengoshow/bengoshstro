@@ -1,46 +1,65 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/Layout.astro'
 
-const pageTitle = 'About Me';
+const pageTitle = 'About Ben Goshow'
 
 const identity = {
   firstName: 'Ben',
-  country: 'Indianapolis',
-  occupation: 'Developer',
-  hobbies: ['reading science fiction', 'playing bass guitar', 'watching professional baseball'],
-};
+  location: 'Indianapolis, Indiana',
+  occupation: 'Front End Web Developer',
+  hobbies: [
+    'reading (science) fiction', 
+    'playing bass guitar', 
+    'listening to indie rock (mostly)',
+    'watching professional baseball'],
+}
 
-const skills = ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Astro'];
+const skills = [
+  'React, Next.js, TypeScript, JavaScript',
+  'Jest, React Testing Library',
+  'HTML, CSS, Bootstrap, Foundation, PHP, MySQL',
+  'Jira, Git, Github/Github Actions, CircleCI Continuous Integration',
+  'Contentful, WordPress, Drupal Content Management Systems',
+  'Hubspot CMS, Rock RMS with Lava templating, Ekklesia 360 CMS',
+  'Twig, Liquid, Hubl templating languages',
+]
 ---
 
-<Layout title="About Ben Goshow" description="This is a page about Ben Goshow">
-  <img
-    class="circle"
-    src="/bengoshow_profile.jpeg"
-    alt="Stylized portrait of Ben Goshow gazing wistfully into the middle distance, undoubtedly dreaming of space travel."
-  />
-  <h1 class="mt-10">My name is Ben Goshow</h1>
-  <p>I've been building websites since the dawn of this fair century.</p>
-  <p>Here are a few facts about me:</p>
-  <ul>
-    <li>I live in {identity.country} and I work as a {identity.occupation}.</li>
-    {
-      identity.hobbies.length >= 2 && (
-        <li>
-          Two of my hobbies are: {identity.hobbies[0]} and {identity.hobbies[1]}
-        </li>
-      )
-    }
-  </ul>
-  <p>My skills include:</p>
-  <ul>
-    {skills.map((skill) => <li class="skill">{skill}</li>)}
-  </ul>
+<Layout title={pageTitle} description="This is a page about Ben Goshow">
+  <div>
+    <img
+      class="circle"
+      src="/bengoshow_profile.jpeg"
+      alt="Stylized portrait of Ben Goshow gazing wistfully into the middle distance, undoubtedly dreaming of space travel."
+    />
+    <h1>My name is Ben Goshow</h1>
+    <p>
+      As an accomplished front end web developer and tech lead, I combine communication, leadership, and technical
+      skills with self-management and project management to directly impact the production team, client delivery, and
+      user experience, ensuring the timely and tested fulfillment of project commitments.
+    </p>
+    <p class="mb-10">I live in {identity.location} and I work as a {identity.occupation}.</p>
+  </div>
+  <div class="clear-both grid md:flex gap-4 mt-4">
+    <div class="column">
+      <h2>My skills include:</h2>
+      <ul class="unordered-list">
+        {skills.map((skill) => <li class="skill">{skill}</li>)}
+      </ul>
+    </div>
+    <div class="column">
+      <h2>Some hobbies of mine:</h2>
+      <ul>
+        {identity.hobbies.map((hobby) => <li class="hobby">{hobby}</li>)}
+      </ul>
+    </div>
+  </div>
 </Layout>
 <style>
   .circle {
     float: left;
     width: 50%;
+    max-width: 290px;
     border-radius: 100%;
     transform: translateX(-20px);
     shape-outside: circle(50%);

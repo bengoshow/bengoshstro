@@ -1,7 +1,22 @@
 ---
-import Layout from '../layouts/Layout.astro';
-const pageTitle = 'Missions and Missives';
-const pageDescription = "Side projects and stuff I've written about them";
+import Layout from '../layouts/Layout.astro'
+import BlogPost from '../components/BlogPost.astro'
+const pageTitle = 'Missions'
+const pageDescription = "Portfolio projects and words I've written about them"
+const allPosts = await Astro.glob('./missions/*.mdx')
+allPosts.sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate))
 ---
 
-<Layout title={pageTitle} description={pageDescription} />
+<Layout title={pageTitle} description={pageDescription}>
+  <main>
+    <div>
+    <h1>{pageTitle}</h1>
+    <p>{pageDescription}</p>
+      {
+        allPosts.map((post) => (
+          <BlogPost url={post.url} title={post.frontmatter.title} summary={post.frontmatter.description} />
+        ))
+      }
+    </div>
+  </main>
+</Layout>

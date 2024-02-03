@@ -1,10 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BlogPost from '../components/BlogPost.astro';
+const allPosts = await Astro.glob('./log/*.mdx');
+allPosts.sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate));
+const pageTitle = "Captain's Log"
+const pageDescription = "Blog posts about working and learning in the front end web development industry"
 ---
 
-<Layout title="Captain's Log" description="Blog posts about the tech industry">
+<Layout title={pageTitle} description={pageDescription}>
   <main>
-    <h1>Captain's Log</h1>
-    <p>Stardate June 21, 2022</p>
+    <div>
+      <h1>{pageTitle}</h1>
+      <p>{pageDescription}</p>
+      {allPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} summary={post.frontmatter.description} />)}
+    </div>
   </main>
 </Layout>

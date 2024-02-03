@@ -29,7 +29,7 @@ $theme-yellow: hsl(55deg 100% 50%);
     min-height: 100vh;
   }
   section {
-    margin: 0 auto;
+    margin: 90px auto 0 auto;
     width: 100%;
     max-width: 80ch;
     padding: 1rem;
@@ -42,7 +42,10 @@ $theme-yellow: hsl(55deg 100% 50%);
     @apply underline text-theme-light hover:text-theme-yellow transition-colors duration-300;
   }
   h1 {
-    @apply text-2xl my-1 mx-0 font-extrabold font-display;
+    @apply text-3xl my-1 mx-0 font-extrabold font-display;
+  }
+  h2 {
+    @apply text-xl my-1 mx-0 font-extrabold font-display;
   }
   p {
     @apply my-6;
