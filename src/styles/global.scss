@@ -76,7 +76,7 @@ $theme-yellow: hsl(55deg 100% 50%);
     @apply rounded-full w-28 h-28;
   }
   #menu-opener {
-    @apply fixed top-6 right-6;
+    @apply fixed top-6 right-6 p-3;
     span,
     svg {
       @apply transition-all duration-300 relative z-10;
@@ -98,7 +98,7 @@ $theme-yellow: hsl(55deg 100% 50%);
   }
   button,
   .button {
-    @apply inline-block rounded-lg p-3 ring-2 ring-offset-2 ring-offset-blue-950 ring-yellow-500 relative z-10 mx-1 no-underline cursor-pointer;
+    @apply block md:inline-block rounded-lg px-5 py-3 ring-2 ring-offset-2 ring-offset-blue-950 ring-yellow-500 relative z-10 mx-2 my-4 no-underline cursor-pointer text-center;
     background-color: var(--theme-dark);
     background-image: linear-gradient(45deg, var(--gradient));
     &::after {
