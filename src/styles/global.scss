@@ -42,7 +42,7 @@ $theme-yellow: hsl(55deg 100% 50%);
     @apply underline text-theme-light hover:text-theme-yellow transition-colors duration-300;
   }
   h1 {
-    @apply text-3xl my-1 mx-0 font-extrabold font-display;
+    @apply text-3xl my-1 mx-0 font-extrabold font-display uppercase;
   }
   h2 {
     @apply text-xl my-1 mx-0 font-extrabold font-display;
@@ -100,6 +100,11 @@ $theme-yellow: hsl(55deg 100% 50%);
       }
     }
   }
+  
+  img.promoimg {
+    @apply rounded border-2 border-yellow-500 shadow-black shadow-lg mb-10;
+  }
+
   button,
   .button {
     @apply block md:inline-block rounded-lg px-5 py-3 ring-2 ring-offset-2 ring-offset-blue-950 ring-yellow-500 relative z-10 mx-2 my-4 no-underline cursor-pointer text-center;
