@@ -1,4 +1,4 @@
-<button id="menu-opener" aria-label="Menu">
+<a href="/" id="menu-opener" aria-label="Menu" class="button">
   <span class="menu-icon menu-icon--closed">
     <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48">
       <path
@@ -15,11 +15,12 @@
       ></path>
     </svg>
   </span>
-</button>
+</a>
 <script>
   const menuButton = document.querySelector('#menu-opener');
   const mainMenu = document.querySelector('nav.main');
-  menuButton?.addEventListener('click', (event) => {
+  menuButton?.addEventListener('click', (e) => {
+    e.preventDefault();
     mainMenu?.setAttribute('style', 'right:0');
   });
 </script>
