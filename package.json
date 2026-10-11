@@ -3,11 +3,12 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
+    "dev": "npm run sync-tail && astro dev",
+    "start": "npm run sync-tail && astro dev",
+    "build": "npm run sync-tail && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "sync-tail": "node scripts/sync-tail.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.1.1",
