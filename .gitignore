@@ -20,7 +20,3 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 .vscode/
-
-# Tail posts are generated from bengoshow/tail before dev/build
-src/pages/learned/*.mdx
-src/pages/learned/.tail-sync-manifest.json
