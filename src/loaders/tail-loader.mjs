@@ -16,7 +16,7 @@ async function fetchJson(url) {
 }
 
 function readFrontmatterValue(frontmatter, key) {
-  const match = frontmatter.match(new RegExp(`^${key}:\\s*(.*)$`, 'm'));
+  const match = frontmatter.match(new RegExp(`^${key}:[ \t]*(.*)$`, 'm'));
   const value = match?.[1]?.trim();
   if (!value) return '';
   if (value.startsWith('"')) return JSON.parse(value);
@@ -25,6 +25,12 @@ function readFrontmatterValue(frontmatter, key) {
 
 function readTags(frontmatter) {
   const value = readFrontmatterValue(frontmatter, 'tags');
+  if (!value) {
+    const block = frontmatter.match(/^tags:[ \t]*\r?\n((?:[ \t]+-[^\n]*(?:\n|$))+)/m)?.[1] ?? '';
+    return block.split('\n')
+      .map((line) => line.trim().replace(/^-\s*/, '').replace(/^['"]|['"]$/g, ''))
+      .filter(Boolean);
+  }
   if (!value.startsWith('[') || !value.endsWith(']')) return [];
 
   return value.slice(1, -1)
