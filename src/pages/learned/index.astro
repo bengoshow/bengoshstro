@@ -1,9 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import BlogPost from '../../components/BlogPost.astro';
+import { getCollection } from 'astro:content';
 
-const allPosts = await Astro.glob('./*.mdx');
-allPosts.sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate));
+const allPosts = await getCollection('learned');
+allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const pageTitle = 'Today AI Learned';
 const pageDescription = 'Engineering case studies about the decisions, checks, and lessons behind AI-assisted work.';
 ---
@@ -14,7 +15,7 @@ const pageDescription = 'Engineering case studies about the decisions, checks, a
       <h1>{pageTitle}</h1>
       <p>{pageDescription}</p>
       <p>These writeups come from my public <a href="https://github.com/bengoshow/tail">Today AI Learned journal</a>. Each one traces a problem through the choices I made, how I checked the result, and what I can reuse.</p>
-      {allPosts.map((post) => <BlogPost url={post.url} title={post.frontmatter.title} summary={post.frontmatter.description} />)}
+      {allPosts.map((post) => <BlogPost url={`/learned/${post.id}`} title={post.data.title} summary={post.data.description} />)}
     </div>
   </main>
 </Layout>

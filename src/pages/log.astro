@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import BlogPost from '../components/BlogPost.astro';
-const allPosts = await Astro.glob('./log/*.mdx');
+const allPosts = Object.values(import.meta.glob('./log/*.mdx', { eager: true }));
 allPosts.sort((a, b) => Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate));
 const pageTitle = "Captain's Log"
 const pageDescription = "Blog posts about working and learning in the front end web development industry"
