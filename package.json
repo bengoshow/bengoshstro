@@ -8,7 +8,9 @@
     "build": "npm run sync-tail && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "sync-tail": "node scripts/sync-tail.mjs"
+    "sync-tail": "node scripts/sync-tail.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "prebuild": "npm test"
   },
   "dependencies": {
     "@astrojs/mdx": "^2.1.1",

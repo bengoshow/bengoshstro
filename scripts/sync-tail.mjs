@@ -16,42 +16,48 @@ async function getJson(url) {
 }
 
 function frontmatterValue(source, key) {
-  const match = source.match(new RegExp('^' + key + ':\\\\s*(.*)$', 'm'));
+  const match = source.match(new RegExp('^' + key + ':[ \t]*(.*)$', 'm'));
   return match?.[1]?.trim().replace(/^['"]|['"]$/g, '') ?? '';
 }
 
 function parseTags(source) {
   const value = frontmatterValue(source, 'tags');
+  if (!value) {
+    const block = source.match(/^tags:[ \t]*\r?\n((?:[ \t]+-[^\n]*(?:\n|$))+)/m)?.[1] ?? '';
+    return block.split('\n')
+      .map((line) => line.trim().replace(/^-\s*/, '').replace(/^['"]|['"]$/g, ''))
+      .filter(Boolean);
+  }
   if (!value.startsWith('[') || !value.endsWith(']')) return [];
   return value.slice(1, -1).split(',').map((tag) => tag.trim().replace(/^['"]|['"]$/g, '')).filter(Boolean);
 }
 
 function slugFromFilename(filename) {
-  return filename.replace(/^\\d{4}-\\d{2}-\\d{2}-/, '').replace(/\\.md$/, '');
+  return filename.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, '');
 }
 
 function descriptionFrom(body) {
-  const problem = body.match(/^## Problem\\s*\\n+([\\s\\S]*?)(?=\\n## |\\n### Social draft|$)/m)?.[1] ?? '';
-  const paragraph = problem.trim().split(/\\n\\s*\\n/)[0] ?? '';
-  const plain = paragraph.replace(/\\[([^\\]]+)\\]\\([^)]+\\)/g, '$1').replace(/[*_#>]/g, '').replace(/\\s+/g, ' ').trim();
+  const problem = body.match(/^## Problem\s*\n+([\s\S]*?)(?=\n## |\n### Social draft|$)/m)?.[1] ?? '';
+  const paragraph = problem.trim().split(/\n\s*\n/)[0] ?? '';
+  const plain = paragraph.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/[*_#>]/g, '').replace(/\s+/g, ' ').trim();
   if (!plain) return 'A Today AI Learned engineering case study.';
   return plain.length > 220 ? plain.slice(0, 217).trimEnd() + '…' : plain;
 }
 
 function createPage(source, filename, rawUrl) {
-  const match = source.match(/^---\\s*\\n([\\s\\S]*?)\\n---\\s*\\n?([\\s\\S]*)$/);
+  const match = source.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/);
   const frontmatter = match?.[1];
   const article = match?.[2] ?? '';
   if (!frontmatter || !article) throw new Error('Could not parse Tail frontmatter in ' + filename);
 
   const date = frontmatterValue(frontmatter, 'date');
   const title = frontmatterValue(frontmatter, 'title');
-  if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(date) || !title) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !title) {
     throw new Error('Missing or invalid date/title in ' + filename);
   }
 
   // Social drafts are useful in the source repo but aren't part of the website article.
-  const publicArticle = article.split(/^### Social draft\\s*$/m)[0].trim();
+  const publicArticle = article.split(/^### Social draft\b.*$/m)[0].trim();
   const tags = parseTags(frontmatter);
   const metadata = [
     'title: ' + JSON.stringify(title),
