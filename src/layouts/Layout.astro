@@ -9,6 +9,7 @@ import '../styles/global.scss';
 import MenuButton from '../components/MenuButton.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import Starfield from '../components/Starfield.astro';
 import '@fontsource/rubik';
 import '@fontsource/bungee';
 import '@fontsource/bungee-shade';
@@ -25,8 +26,8 @@ import '@fontsource/bungee-shade';
     <title>{title}</title>
   </head>
   <body>
-    <slot name="background" />
-    <main class:list={{ "with-background": Astro.slots.has("background") }}>
+    <Starfield />
+    <main>
       <header>
         <MenuButton />
       </header>
@@ -42,7 +43,7 @@ import '@fontsource/bungee-shade';
 </html>
 
 <style>
-  main.with-background {
+  main {
     position: relative;
     z-index: 1;
   }
