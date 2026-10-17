@@ -1,0 +1,130 @@
+---
+const stars = Array.from({ length: 110 }, () => ({
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: 0.75 + Math.random() * 1.75,
+  opacity: 0.25 + Math.random() * 0.45,
+  duration: 3 + Math.random() * 5,
+  delay: -Math.random() * 8,
+}));
+---
+
+<home-starfield aria-hidden="true">
+  <div class="stars">
+    {stars.map((star) => (
+      <span class="star" style={`left:${star.x}%;top:${star.y}%;--size:${star.size}px;--brightness:${star.opacity};--duration:${star.duration}s;--delay:${star.delay}s;`} />
+    ))}
+  </div>
+  <span class="shooting-star"></span>
+</home-starfield>
+
+<style>
+  home-starfield {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .stars {
+    position: absolute;
+    inset: 0;
+    mask-image: linear-gradient(to bottom, black 65%, transparent);
+  }
+  .star {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: #eef4ff;
+    box-shadow: 0 0 4px rgb(213 229 255 / 30%);
+    opacity: var(--brightness);
+    animation: twinkle var(--duration) ease-in-out var(--delay) infinite alternate;
+  }
+  .shooting-star {
+    position: absolute;
+    width: clamp(80px, 12vw, 160px);
+    height: 1px;
+    border-radius: 999px;
+    background: linear-gradient(to right, #f4f7ff, rgb(222 234 255 / 45%) 20%, transparent);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  .shooting-star::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #f4f7ff;
+    box-shadow: 0 0 6px rgb(222 234 255 / 65%);
+  }
+  @keyframes twinkle {
+    from { opacity: calc(var(--brightness) * 0.45); }
+    to { opacity: var(--brightness); }
+  }
+  @media (max-width: 640px) {
+    .star:nth-child(even) { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .star { animation: none; }
+    .shooting-star { display: none; }
+  }
+</style>
+
+<script>
+  class HomeStarfield extends HTMLElement {
+    cleanup?: () => void;
+
+    connectedCallback() {
+      const meteor = this.querySelector<HTMLElement>('.shooting-star');
+      if (!meteor) return;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let timer = 0;
+      let animation: Animation | undefined;
+
+      const schedule = (delay = 25000 + Math.random() * 10000) => {
+        window.clearTimeout(timer);
+        if (reducedMotion.matches || document.hidden) return;
+        timer = window.setTimeout(shoot, delay);
+      };
+      const shoot = () => {
+        if (reducedMotion.matches || document.hidden) return;
+        meteor.style.left = `${55 + Math.random() * 40}%`;
+        meteor.style.top = `${8 + Math.random() * 27}%`;
+        animation = meteor.animate([
+          { transform: 'translate3d(0, 0, 0) rotate(-35deg)', opacity: 0, offset: 0 },
+          { opacity: 0.7, offset: 0.12 },
+          { opacity: 0.5, offset: 0.65 },
+          { transform: 'translate3d(-45vw, 32vh, 0) rotate(-35deg)', opacity: 0, offset: 1 },
+        ], { duration: 1200, easing: 'ease-out' });
+        schedule();
+      };
+      const update = () => {
+        animation?.cancel();
+        schedule();
+      };
+
+      document.addEventListener('visibilitychange', update);
+      reducedMotion.addEventListener('change', update);
+      // Give a new visitor a first glimpse, then settle into roughly 30-second intervals.
+      schedule(8000 + Math.random() * 4000);
+      this.cleanup = () => {
+        window.clearTimeout(timer);
+        animation?.cancel();
+        document.removeEventListener('visibilitychange', update);
+        reducedMotion.removeEventListener('change', update);
+      };
+    }
+
+    disconnectedCallback() {
+      this.cleanup?.();
+    }
+  }
+
+  if (!customElements.get('home-starfield')) {
+    customElements.define('home-starfield', HomeStarfield);
+  }
+</script>

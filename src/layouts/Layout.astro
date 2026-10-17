@@ -25,7 +25,8 @@ import '@fontsource/bungee-shade';
     <title>{title}</title>
   </head>
   <body>
-    <main>
+    <slot name="background" />
+    <main class:list={{ "with-background": Astro.slots.has("background") }}>
       <header>
         <MenuButton />
       </header>
@@ -39,3 +40,10 @@ import '@fontsource/bungee-shade';
     <Navigation />
   </body>
 </html>
+
+<style>
+  main.with-background {
+    position: relative;
+    z-index: 1;
+  }
+</style>
